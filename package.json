@@ -1,0 +1,19 @@
+{
+  "name": "fcc-backend-votingapp",
+  "description": "A full stack voting app built for a FCC basejump",
+  "version": "1.0.0",
+  "author": {
+    "name": "codemzy"
+  },
+  "dependencies": {
+    "body-parser": "~1.14.x",
+    "express": "~4.13.x",
+    "mongodb": "~2.1.6"
+  },
+  "engines": {
+    "node": "4.2.4"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
