@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>VoteGoat Voting App - by codemzy</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular-route.min.js"></script>
+</head>
+<body ng-app="VoteGoatApp">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <a class="navbar-brand" id="brand-icon"><img alt="VOTEGOAT" src="../img/votegoaticon.png"></a>
+            <a class="navbar-brand">VoteGoat</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#/">Home</a></li>
+            <li><a href="/api/polls">Polls</a></li>
+            <li><a href="#/polls">Polls</a></li>
+          </ul>
+    
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Log In</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="row" id="page-wrap">
+      
+      <div ng-view></div>
+
+    </div>
+    
+    <div class="row" id="footer">
+      <div class="container">
+        <div class="col-md-3 col-xs-6">
+          <h3>Navigate.</h3>
+          <p>Home<br>
+          Polls<br>
+          Log In<br><br></p>
+        </div>
+        <div class="col-md-3 col-xs-6">
+          <h3>Follow.</h3>
+          <p>Twitter<br>
+          GitHub<br>
+          Portfolio<br><br></p>
+        </div>
+        <div class="col-md-6">
+          <h3>About.</h3>
+          <p>Built by codemzy.</p>
+          <p>This is a RESTful app, built with MongoDB, Express, Angular and NodeJS (the MEAN stack).</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <!-- Modules -->
+    <script src="../app/app.js"></script>
+    
+    <!-- Controllers -->
+    <script src="../app/controllers/PollController.js"></script>
+
+    <!-- Services -->
+    <script src="../app/services/polls.js"></script>
+    
+</body>
+</html>

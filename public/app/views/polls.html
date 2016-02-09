@@ -1,0 +1,23 @@
+<div class="container-fluid">
+<div class="row" id="page-contents">
+  <div class="container">
+    <div class="col-md-12">
+      <h1>Polls.</h1>
+      <div class="alert alert-warning" role="alert">
+        <p class="text-muted"><b>Message from the VoteGoat:</b> You can view and vote on these polls, but you're not logged in, so your opinion doesn't matter to me. If you log in I might be nice. VoteGoat.</p>
+      </div>
+    </div>
+
+
+<div class="col-md-4" ng-repeat="poll in polls">
+  <a href="#/poll/{{ poll.poll_id }}">
+    <div class="well poll-title-well text-center">
+        <h3>{{ poll.title }}</h3>
+    </div>
+  </a>
+</div>
+
+
+  </div>
+</div>
+</div>

@@ -3,7 +3,7 @@
 module.exports = function (app, db) {
     app.route('/')
         .get(function (request, response) {
-            response.sendFile(process.cwd() + '/public/html/index.html');
+            response.sendFile(process.cwd() + '/public/app/index.html');
         });
     app.route('/api/polls')
         .get(function(req, res) {
@@ -11,11 +11,6 @@ module.exports = function (app, db) {
                 if (err) {
                     res.json({ "error": "There were no polls found" });
                 } else {
-                    // this for loop is just in case I need it later to get data from API
-                    for (var i = 0; i < docs.length; i++) {
-                        console.log(docs[i].title);
-                        console.log(docs[i].poll_id);
-                    }
                     // repond with all poll titles and poll id's
                     res.json(docs);
                 }
