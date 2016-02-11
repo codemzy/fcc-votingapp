@@ -16,6 +16,9 @@ angular.module('VoteGoatApp', ['ngRoute'])
     templateUrl: '../app/views/polls.html',
     controller: 'PollController'
     })
+    .when('/login', {
+    templateUrl: '../app/views/login.html'
+    })
     .otherwise({ 
       redirectTo: '/' 
     }); 
