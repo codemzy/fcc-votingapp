@@ -2,22 +2,52 @@
 
     <div class="col-md-12">
     <h1>Profile.</h1>
-    <p class="lead">Hey {{username}}, how's tricks?</p>
+    <p class="lead">Hey {{user.username}}, how's tricks?</p>
     </div>
   
     <div class="col-sm-6">
-        <div class="well">
-            <h3><span class="fa fa-twitter"></span> Twitter</h3>
-                <p>
-                    <strong>username</strong>: {{user.twitter.username }}<br>
-                    <strong>displayName</strong>: {{ user.twitter.displayName }}
-                </p>
+        <div class="well text-center">
+            <h3><span class="fa fa-5x fa-twitter"></span><br>Twitter</h3>
+            
+                <div ng-if="user.twitter">
+                    <p>
+                        <strong>Username</strong>: {{user.twitter.username }}<br>
+                        <strong>Display name</strong>: {{ user.twitter.displayName }}
+                    </p>
+                </div>
+                
+                <div ng-if="!user.twitter">
+                    <p>
+                        <a class="btn btn-info"><i class="fa fa-twitter"></i> Link Twitter TO DO</a>
+                    </p>
+                </div>
+                
+        </div>
+    </div>
+    
+    <div class="col-sm-6">
+        <div class="well text-center">
+            <h3><span class="fa fa-5x fa-facebook"></span><br>Facebook</h3>
+            
+                <div ng-if="user.facebook">
+                    <p>
+                        <strong>Username</strong>: to do<br>
+                        <strong>Email</strong>: to do
+                    </p>
+                </div>
+                
+                <div ng-if="!user.facebook">
+                    <p>
+                        <a class="btn btn-primary"><i class="fa fa-facebook"></i> Link Facebook TO DO</a>
+                    </p>
+                </div>
+            
         </div>
     </div>
     
     <div class="col-md-12">
-        <div class="jumbotron text-center">
-          <p><a class="btn btn-default btn-lg"><i class="fa fa-sign-out"></i> Log Out</a></p>
+        <div class="well text-center">
+          <p><a class="btn btn-danger btn-lg"><i class="fa fa-sign-out"></i> Log Out</a></p>
         </div>
     </div>
 
