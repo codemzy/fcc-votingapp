@@ -13,10 +13,8 @@ module.exports = function (app, db, passport) {
     app.route('/')
         .get(function (request, response) {
     		if (request.isAuthenticated()) {
-    			console.log("Logged In");
     			response.sendFile(process.cwd() + '/public/app/loggedin.html');
     		} else {
-    			console.log("Logged Out");
     			response.sendFile(process.cwd() + '/public/app/index.html');
     		}
             
@@ -38,7 +36,7 @@ module.exports = function (app, db, passport) {
         .get(function(req, res) {
             var pollID = parseInt(req.params.pollid);
             console.log(pollID);
-            db.collection('polls').find({"poll_id": pollID}, {"_id": 0, "title": 1, "poll_id": 1, "options": 1}).toArray(function(err, doc) {
+            db.collection('polls').findOne({"poll_id": pollID}, {"_id": 0, "title": 1, "poll_id": 1, "options": 1}, function(err, doc) {
                 if (err) {
                     res.json({ "error": "No poll found" });
                 } else {

@@ -14,6 +14,10 @@ angular.module('VoteGoatApp', ['ngRoute'])
     })
     .when('/polls', {
     templateUrl: '../app/views/polls.html',
+    controller: 'PollsController'
+    })
+    .when('/poll/:num', {
+    templateUrl: '../app/views/poll.html',
     controller: 'PollController'
     })
     .when('/login', {
