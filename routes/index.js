@@ -35,7 +35,6 @@ module.exports = function (app, db, passport) {
     app.route('/api/poll/:pollid')
         .get(function(req, res) {
             var pollID = parseInt(req.params.pollid);
-            console.log(pollID);
             db.collection('polls').findOne({"poll_id": pollID}, {"_id": 0, "title": 1, "poll_id": 1, "options": 1}, function(err, doc) {
                 if (err) {
                     res.json({ "error": "No poll found" });

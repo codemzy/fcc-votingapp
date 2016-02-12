@@ -1,9 +1,7 @@
-// pulls in single poll data (one poll)
+// pulls in one poll data (by poll num)
 angular.module('VoteGoatApp')
 .controller('PollController', ['$scope', '$routeParams', 'poll', function($scope, $routeParams, poll) {
-  $scope.pollnumber={};
-  this.pollNum = $routeParams.pollNum;
-  poll.success(function(data) {
+  poll.getPoll($routeParams.num).success(function(data) {
     $scope.poll = data;
   });  
 }]);
