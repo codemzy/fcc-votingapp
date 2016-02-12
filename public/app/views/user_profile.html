@@ -1,0 +1,24 @@
+<div class="container">
+
+    <div class="col-md-12">
+    <h1>Profile.</h1>
+    <p class="lead">Hey {{username}}, how's tricks?</p>
+    </div>
+  
+    <div class="col-sm-6">
+        <div class="well">
+            <h3><span class="fa fa-twitter"></span> Twitter</h3>
+                <p>
+                    <strong>username</strong>: {{user.twitter.username }}<br>
+                    <strong>displayName</strong>: {{ user.twitter.displayName }}
+                </p>
+        </div>
+    </div>
+    
+    <div class="col-md-12">
+        <div class="jumbotron text-center">
+          <p><a class="btn btn-default btn-lg"><i class="fa fa-sign-out"></i> Log Out</a></p>
+        </div>
+    </div>
+
+</div>

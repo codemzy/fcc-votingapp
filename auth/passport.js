@@ -7,7 +7,7 @@ module.exports = function (passport, db) {
     });
 	
 	passport.deserializeUser(function (id, done) {
-        db.collection('users').find({ "id": id }, function(err, user) {
+        db.collection('users').findOne({ 'twitter.id': id }, function(err, user) {
             done(err, user);
         });
 	});

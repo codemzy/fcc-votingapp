@@ -6,7 +6,7 @@ module.exports = function (app, db, passport) {
 		if (req.isAuthenticated()) {
 			return next();
 		} else {
-			res.redirect('/#/login');
+			res.redirect('/');
 		}
 	}
     
@@ -21,6 +21,8 @@ module.exports = function (app, db, passport) {
     		}
             
         });
+        
+    // anonomous api's
     app.route('/api/polls')
         .get(function(req, res) {
             db.collection('polls').find({}, {"_id": 0, "title": 1, "poll_id": 1}).toArray(function(err, docs) {
@@ -46,20 +48,28 @@ module.exports = function (app, db, passport) {
             });
         });
         
-        // authentication routes
+    // registered apis
+    app.route('/api/user')
+        .get(isLoggedIn, function(req, res) {
+			res.json(req.user);
+        });
         
-    	app.route('/auth/twitter')
-    		.get(passport.authenticate('twitter'));
-    
-    	app.route('/auth/twitter/callback')
-    		.get(passport.authenticate('twitter', {
-    			successRedirect: '/',
-    			failureRedirect: '/'
-    		}));
-    		
-    	app.route('/logout')
-    		.get(function (req, res) {
-    			req.logout();
-    			res.redirect('/');
-    		});
+        
+    // authentication routes
+        
+	app.route('/auth/twitter')
+		.get(passport.authenticate('twitter'));
+
+	app.route('/auth/twitter/callback')
+		.get(passport.authenticate('twitter', {
+			successRedirect: '/',
+			failureRedirect: '/'
+		}));
+		
+	app.route('/logout')
+		.get(function (req, res) {
+			req.logout();
+			res.redirect('/');
+		});
+		
 };

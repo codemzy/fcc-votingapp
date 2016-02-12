@@ -19,6 +19,12 @@ angular.module('VoteGoatApp', ['ngRoute'])
     .when('/login', {
     templateUrl: '../app/views/login.html'
     })
+    // looged in routes
+    .when('/profile', {
+    templateUrl: '../app/views/user_profile.html',
+    controller: 'ProfileController'
+    })
+    // default
     .otherwise({ 
       redirectTo: '/' 
     }); 
