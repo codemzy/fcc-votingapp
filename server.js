@@ -9,7 +9,8 @@ require('dotenv').config();
 
 app.set('port', (process.env.PORT || 8080));
 
-app.use(express.static('public'));
+app.use('/public', express.static(process.cwd() + '/public'));
+// app.use(express.static('public'));
 
 mongo.connect(process.env.MONGO_URL, function (error, db) {
     if (error) {

@@ -35,12 +35,34 @@ module.exports = function (app, db, passport) {
     app.route('/api/poll/:pollid')
         .get(function(req, res) {
             var pollID = parseInt(req.params.pollid);
+            var ip = req.headers["x-forwarded-for"];
             db.collection('polls').findOne({"poll_id": pollID}, {"_id": 0, "title": 1, "poll_id": 1, "options": 1}, function(err, doc) {
                 if (err) {
                     res.json({ "error": "No poll found" });
                 } else {
-                    // respond with poll information including options
-                    res.json(doc);
+                    //TO DO return user IP info to check if IP has already voted
+                    db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1}, function(err, user) {
+                        if (err) {
+                            // respond with poll information including options
+                            res.json({ poll: doc });
+                        } else {
+                            // respond with poll information including options and user information
+                            res.json({ poll: doc, user: user });
+                        }
+                    });
+                }
+            });
+        });
+    app.route('/api/poll/:pollid/:vote')
+        .get(function(req, res) {
+            var pollID = parseInt(req.params.pollid);
+            var optionVote = req.params.vote;
+            // check if IP address allready voted
+            db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1}, function(err, doc) {
+                // if no vote on this poll for this IP address then add the vote
+                if (err) {
+                    db.collection('polls').update({"poll_id": pollID}, { $inc: { optionVote: 1 } }, { upsert: false, multi: false });
+                    
                 }
             });
         });

@@ -10,18 +10,18 @@ angular.module('VoteGoatApp', ['ngRoute'])
 .config(function($routeProvider, $locationProvider) {
   $routeProvider
     .when('/', {
-    templateUrl: '../app/views/home.html'
+    templateUrl: '/public/app/views/home.html'
     })
     .when('/polls', {
-    templateUrl: '../app/views/polls.html',
+    templateUrl: '/public/app/views/polls.html',
     controller: 'PollsController'
     })
     .when('/poll/:num', {
-    templateUrl: '../app/views/poll.html',
+    templateUrl: '/public/app/views/poll.html',
     controller: 'PollController'
     })
     .when('/login', {
-    templateUrl: '../app/views/login.html'
+    templateUrl: '/public/app/views/login.html'
     })
     // default
     .otherwise({ 
