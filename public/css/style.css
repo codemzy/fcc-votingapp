@@ -65,8 +65,17 @@ btn a {
     margin: 5px;
 }
 
+.btn-getstarted {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.bottom-div {
+    margin-bottom: 30px;
+}
+
 #home-banner {
-    background-color: #BDC3C7;
+    background-color: #C0392B;
     color: #ffffff;
 }
 
@@ -88,6 +97,10 @@ btn a {
 
 #footer a:hover {
     color: #ffffff;
+}
+
+.poll-title-well {
+    height: 180px;
 }
 
 .chart-legend li span{

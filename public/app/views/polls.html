@@ -12,7 +12,8 @@
   <div class="col-md-4" ng-repeat="poll in polls">
     <a href="#/poll/{{ poll.poll_id }}">
       <div class="well poll-title-well text-center">
-          <h3>{{ poll.title }}</h3>
+        <i class="fa fa-5x fa-pie-chart"></i>
+        <h3>{{ titleLength(poll.title) }}</h3>
       </div>
     </a>
   </div>
