@@ -14,7 +14,7 @@ angular.module('VoteGoatApp')
   this.addPollVote = function(pollNum, option) {
     return $http.get('/api/newvote/' + pollNum + "/" + option)
               .success(function(data) {
-                return "Your vote for " + option + " has been submitted";
+                return "Your vote for " + option + " has been submitted.";
               })
               .error(function(err) {
                 return err;

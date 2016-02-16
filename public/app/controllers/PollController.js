@@ -22,9 +22,12 @@ angular.module('VoteGoatApp')
     $scope.user = data.user;
     // set the chart data
     var chartData = [];
-    for (var i = 0; i < data.poll.options.length; i++) {
+    //TODEL var anyVotes = 0;
+    for (var i = 0; i < data.poll.options.length; i++) { 
+      //TODEL if (data.poll.options[i].votes > 0) { anyVotes += 1; }
       chartData.push({ "value": data.poll.options[i].votes, "label": data.poll.options[i].option, "color": chartColors[i][0], "highlight": chartColors[i][1] });
     }
+    //TODEL if (anyVotes == 0) { chartData.push({ "value": 1, "label": "No votes yet", "color": chartColors[0][0], "highlight": chartColors[0][1] }); }
     // Put the data in the chart
     var ctx = document.getElementById("voteChart").getContext("2d");
     var voteGoatChart = new Chart(ctx).Pie(chartData, options);
