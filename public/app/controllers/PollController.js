@@ -31,11 +31,9 @@ angular.module('VoteGoatApp')
     document.getElementById('voteChart-legend').innerHTML = voteGoatChart.generateLegend();
     // check if the user IP has previously voted
     $scope.voted = false;
-    $scope.trueVoted = function() {
-      $scope.voted = true;
-    };
     // value of selected item
     $scope.myVote = "";
+    $scope.message = false;
     // ADD VOTE FUNCTION
     $scope.addVote = function() {
       // UPDATE THE CHART CLIENT SIDE
@@ -43,20 +41,20 @@ angular.module('VoteGoatApp')
         if (chartData[j].label == $scope.myVote.option) {
           voteGoatChart.segments[j].value = chartData[j].value + 1;
           voteGoatChart.update();
+          $scope.voted = true;
+          $scope.message = 'Your vote for "' + $scope.myVote.option + '" has been submitted';
         }
       }
       // UPDATE THE DB
-      poll.addPollVote($routeParams.num, $scope.myVote.option).success(function(vote) {
-          $scope.voted = true;
-      });
+      poll.addPollVote($routeParams.num, $scope.myVote.option);
     };
     // CHECK IF VOTED BEFORE FUNCTION
     $scope.checkVote = function() {
       if ($scope.voted) {
         return true;
       } else {
-        for (var k = 0; k < data.user.polls.length; k++) {
-          if (data.user.polls[k] == data.poll.poll_id) {
+        for (var k = 0; k < data.user.poll_votes.length; k++) {
+          if (data.user.poll_votes[k] == data.poll.poll_id) {
             return true;
           }
         }

@@ -40,7 +40,7 @@ module.exports = function (app, db, passport) {
                 if (err) {
                     res.json({ "error": "No poll found" });
                 } else {
-                    //TO DO return user IP info to check if IP has already voted
+                    // return user IP info to check if IP has already voted
                     db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1, "poll_votes": 1}, function(err, user) {
                         if (err) {
                             // respond with poll information including options
@@ -53,7 +53,7 @@ module.exports = function (app, db, passport) {
                 }
             });
         });
-    app.route('/api/newvote/:pollid/:vote')
+    app.route('/api/newvote/:pollid/:vote(*)')
         .get(function(req, res) {
             var pollID = parseInt(req.params.pollid);
             var optionVote = req.params.vote;

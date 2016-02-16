@@ -15,30 +15,13 @@
     <div id="voteChart-legend" class="chart-legend"></div>
   </div>
 
-  <div ng-if="!checkVote()">
-    <div class="col-md-6">
-        <div class="jumbotron">
-          <h3><i class="fa fa-archive"></i> Place your vote</h3>
-            <form>
-                <div class="form-group">
-                    <select ng-model="$parent.myVote" name="my-vote" class="form-control" ng-options="option.option for option in poll.options">
-                      <option value="">-- choose vote option --</option>
-                    </select>    
-                </div>
-                <button type="submit" ng-click="$parent.addVote()" class="btn btn-block btn-danger">SUBMIT VOTE</button>
-            </form>
-        </div>
-        
-        <div class="jumbotron">
-          <h3><i class="fa fa-unlock-alt"></i> Log in</h3>
-          <p>If you log in, you can add your own vote options to this poll, create your own polls and view your activity. It's totally free.</p>
-          <a href="#/login" class="btn btn-block btn-primary">Log In</a>
-        </div>
-    </div>
-  </div>
-
   <div ng-if="checkVote()">
     <div class="col-md-6">
+      <div ng-if="message">
+        <div class="alert alert-info" role="alert">
+          <p>{{ message }}</p>
+        </div>
+      </div>
         <div class="jumbotron">
           <h3><i class="fa fa-archive"></i> You voted</h3>
           <p>Looks like you already voted on this poll. You can log in to view your activity and the Goat will keep a record of your votes.</p>
@@ -52,6 +35,28 @@
     </div>
   </div>
   
+  
+  <div ng-if="!checkVote()">
+    <div class="col-md-6">
+        <div class="jumbotron">
+          <h3><i class="fa fa-archive"></i> Place your vote</h3>
+            <form ng-submit="$parent.addVote()">
+                <div class="form-group">
+                    <select ng-model="$parent.myVote" name="my-vote" class="form-control" ng-options="option.option for option in poll.options">
+                      <option value="">-- choose vote option --</option>
+                    </select>    
+                </div>
+                <input type="submit" id="submit" class="btn btn-block btn-danger" value="SUBMIT VOTE" />
+            </form>
+        </div>
+        
+        <div class="jumbotron">
+          <h3><i class="fa fa-unlock-alt"></i> Log in</h3>
+          <p>If you log in, you can add your own vote options to this poll, create your own polls and view your activity. It's totally free.</p>
+          <a href="#/login" class="btn btn-block btn-primary">Log In</a>
+        </div>
+    </div>
+  </div>
   
   
   <div class="col-md-6">
