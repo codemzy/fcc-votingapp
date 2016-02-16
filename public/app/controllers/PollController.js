@@ -1,29 +1,17 @@
 var options = {
-    //Boolean - Whether we should show a stroke on each segment
     segmentShowStroke : true,
-    //String - The colour of each segment stroke
     segmentStrokeColor : "#fff",
-    //Number - The width of each segment stroke
     segmentStrokeWidth : 6,
-    //Number - The percentage of the chart that we cut out of the middle
     percentageInnerCutout : 50, // This is 0 for Pie charts
-  	//Boolean - Whether to animate the chart
   	animation : true,
-    //Number - Amount of animation steps
     animationSteps : 100,
-    //String - Animation easing effect
     animationEasing : "easeOutQuart",
-    //Boolean - Whether we animate the rotation of the Doughnut
     animateRotate : true,
-    //Boolean - Whether we animate scaling the Doughnut from the centre
     animateScale : false,
-    // responsive
     responsive: true
 };
 
 var chartColors = [['#E74C3C', '#C0392B'], ['#3498DB', '#2980B9'], ['#E67E22', '#D35400'], ['#2ECC71', '#27AE60'], ['#34495E', '#2C3E50'], ['#F1C40F', '#F39C12'], ['#1ABC9C', '#16A085'], ['#9B59B6', '#8E44AD']];
-
-
 
 // THE CONTROLLER
 // pulls in one poll data (by poll num)
@@ -45,9 +33,9 @@ angular.module('VoteGoatApp')
     $scope.voted = false;
     // value of selected item
     $scope.myVote = "";
-    // add vote function
+    // ADD VOTE FUNCTION
     $scope.addVote = function() {
-      // update the chart client side
+      // UPDATE THE CHART CLIENT SIDE
       for (var j = 0; j < chartData.length; j++) {
         if (chartData[j].label == $scope.myVote.option) {
           voteGoatChart.segments[j].value = chartData[j].value + 1;
@@ -55,8 +43,14 @@ angular.module('VoteGoatApp')
           $scope.voted = true;
         }
       }
-      // update the database
+      // UPDATE THE DB
+      if ($scope.user) {
+        // user IP exists so just push poll num to array
+      } else {
+        // new IP so add IP and poll num
+      }
     };
+    // CHECK IF VOTED BEFORE FUNCTION
     $scope.checkVote = function() {
       if ($scope.voted) {
         return true;

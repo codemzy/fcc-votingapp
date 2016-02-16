@@ -57,12 +57,19 @@ module.exports = function (app, db, passport) {
         .get(function(req, res) {
             var pollID = parseInt(req.params.pollid);
             var optionVote = req.params.vote;
+            var ip = req.headers["x-forwarded-for"];
             // check if IP address allready voted
-            db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1}, function(err, doc) {
-                // if no vote on this poll for this IP address then add the vote
+            db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1, "poll_votes": 1}, function(err, doc) {
                 if (err) {
+                    // if no records for this IP address then add the IP and the vote to the anonip collection
+                    db.collection('anonip').insert({"ip": ip, "poll_votes": [pollID]});
+                    // and add the vote to the poll
                     db.collection('polls').update({"poll_id": pollID}, { $inc: { optionVote: 1 } }, { upsert: false, multi: false });
-                    
+                } else {
+                    // add the poll_id to the voted array for the IP
+                    db.collection('anonip').update({"ip": ip}, { $push: { "poll_votes": pollID } });
+                    // and add the vote to the poll
+                    db.collection('polls').update({"poll_id": pollID}, { $inc: { optionVote: 1 } }, { upsert: false, multi: false });
                 }
             });
         });
