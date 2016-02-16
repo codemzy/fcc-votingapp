@@ -41,7 +41,7 @@ module.exports = function (app, db, passport) {
                     res.json({ "error": "No poll found" });
                 } else {
                     //TO DO return user IP info to check if IP has already voted
-                    db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1}, function(err, user) {
+                    db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1, "poll_votes": 1}, function(err, user) {
                         if (err) {
                             // respond with poll information including options
                             res.json({ poll: doc });
@@ -53,26 +53,26 @@ module.exports = function (app, db, passport) {
                 }
             });
         });
-    app.route('/api/poll/:pollid/:vote')
+    app.route('/api/newvote/:pollid/:vote')
         .get(function(req, res) {
             var pollID = parseInt(req.params.pollid);
             var optionVote = req.params.vote;
             var ip = req.headers["x-forwarded-for"];
-            // check if IP address allready voted
-            db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1, "poll_votes": 1}, function(err, doc) {
+            var query = { poll_id: pollID, "options.option": optionVote };
+            console.log(query);
+            db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1}, function(err, user) {
                 if (err) {
-                    // if no records for this IP address then add the IP and the vote to the anonip collection
+                    // no user found add the IP and the vote to the anonip collection
                     db.collection('anonip').insert({"ip": ip, "poll_votes": [pollID]});
-                    // and add the vote to the poll
-                    db.collection('polls').update({"poll_id": pollID}, { $inc: { optionVote: 1 } }, { upsert: false, multi: false });
                 } else {
-                    // add the poll_id to the voted array for the IP
+                    // user ip found add the poll_id to the voted array for the IP 
                     db.collection('anonip').update({"ip": ip}, { $push: { "poll_votes": pollID } });
-                    // and add the vote to the poll
-                    db.collection('polls').update({"poll_id": pollID}, { $inc: { optionVote: 1 } }, { upsert: false, multi: false });
                 }
             });
+            // and add the vote to the poll
+            db.collection('polls').update(query, { $inc: { "options.$.votes" : 1 } }, { upsert: false, multi: false });
         });
+
         
     // registered apis
     app.route('/api/user')

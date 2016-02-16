@@ -10,9 +10,15 @@ angular.module('VoteGoatApp')
                 return err;
               });
   };
-  // add a poll vote
-  // this.addPollVote = function(pollNum, option) {
-  //   return $http.post('/api/vote')
-  // }
+  // add a poll vote for new voter
+  this.addPollVote = function(pollNum, option) {
+    return $http.get('/api/newvote/' + pollNum + "/" + option)
+              .success(function(data) {
+                return data;
+              })
+              .error(function(err) {
+                return err;
+              });
+  };
   return this;
 }]);
