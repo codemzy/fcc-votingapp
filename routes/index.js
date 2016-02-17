@@ -79,7 +79,43 @@ module.exports = function (app, db, passport) {
         .get(isLoggedIn, function(req, res) {
 			res.json(req.user);
         });
-        
+    app.route('/api/user/poll/:pollid')
+        .get(isLoggedIn, function(req, res) {
+            console.log(req.user);
+			var user = req.user;
+            var pollID = parseInt(req.params.pollid);
+            db.collection('polls').findOne({"poll_id": pollID}, {"_id": 0, "title": 1, "poll_id": 1, "options": 1}, function(err, doc) {
+                if (err) {
+                    res.json({ "error": "No poll found" });
+                } else {
+                    // return poll info and user info to check if user has already voted
+                    res.json({ poll: doc, user: user });
+                }
+            });
+        });
+    app.route('/api/user/vote/:pollid/:vote(*)')
+        .get(isLoggedIn, function(req, res) {
+            var pollID = parseInt(req.params.pollid);
+            var optionVote = req.params.vote;
+            var query = { poll_id: pollID, "options.option": optionVote };
+            db.collection('users').findOne({"_id": req.user._id }, {"_id": 1}, function(err, user) {
+                if (err) {
+                    // no user found so maybe do a redirect here?
+                } else {
+                    // user found add the poll_id to the voted array and activity message
+                    var today = new Date;
+                    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    var month = months[today.getMonth()];
+                    db.collection('users').update({"_id": req.user._id}, { $push: { "poll_votes": pollID, "activity": pollID + ": You voted for " + optionVote + " on " + today.getDate() + " " + month + ", " + today.getFullYear() } });
+                }
+            });
+            // and add the vote to the poll
+            db.collection('polls').update(query, { $inc: { "options.$.votes" : 1 } }, { upsert: false, multi: false });
+        });
+        // TO DO ROUTE FOR USER NEW POLL VOTE
+        // TO DO ROUTE FOR USER ADD POLL OPTION
+        // TO DO ROUTE FOR USER ADD NEW POLL
+        // TO DO ROUTE FOR USER MY POLLS
         
     // authentication routes
         

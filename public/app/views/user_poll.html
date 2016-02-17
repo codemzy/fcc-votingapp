@@ -3,12 +3,6 @@
   
   <div class="col-md-12">
     <h1>{{ poll.title }}</h1>
-    
-    <div ng-if="!message">
-      <div class="alert alert-warning" role="alert">
-        <p class="text-muted"><b>Message from the VoteGoat:</b> You can view and vote on this poll, but you're not logged in, so you can't add options and your opinion doesn't matter to me. If you log in I might be nice. VoteGoat.</p>
-      </div>
-    </div>
   
     <div ng-if="message">
       <div class="alert alert-info" role="alert">

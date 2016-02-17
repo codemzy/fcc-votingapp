@@ -2,7 +2,7 @@ angular.module('VoteGoatApp')
 .factory('poll', ['$http', function($http) {
   // get the poll data
   this.getPoll = function(pollNum) {
-    return $http.get('/api/poll/' + pollNum)
+    return $http.get('/api/user/poll/' + pollNum)
               .success(function(data) {
                 return data;
               })
@@ -10,9 +10,9 @@ angular.module('VoteGoatApp')
                 return err;
               });
   };
-  // add a poll vote for new voter
+  // add poll vote for registered user
   this.addPollVote = function(pollNum, option) {
-    return $http.get('/api/newvote/' + pollNum + "/" + option)
+    return $http.get('/api/user/vote/' + pollNum + "/" + option)
               .success(function(data) {
                 return "Your vote for " + option + " has been submitted.";
               })
