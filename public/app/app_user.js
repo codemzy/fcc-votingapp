@@ -21,6 +21,10 @@ angular.module('VoteGoatApp', ['ngRoute'])
     templateUrl: '/public/app/views/user_profile.html',
     controller: 'ProfileController'
     })
+    .when('/poll/:num', {
+    templateUrl: '/public/app/views/user_poll.html',
+    controller: 'User_PollController'
+    })
     // default
     .otherwise({ 
       redirectTo: '/' 

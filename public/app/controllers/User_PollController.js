@@ -16,7 +16,7 @@ var chartColors = [['#E74C3C', '#C0392B'], ['#3498DB', '#2980B9'], ['#E67E22', '
 // THE CONTROLLER
 // pulls in one poll data (by poll num)
 angular.module('VoteGoatApp')
-.controller('PollController', ['$scope', '$routeParams', 'poll', function($scope, $routeParams, poll) {
+.controller('User_PollController', ['$scope', '$routeParams', 'poll', function($scope, $routeParams, poll) {
   poll.getPoll($routeParams.num).success(function(data) {
     $scope.poll = data.poll;
     $scope.user = data.user;
