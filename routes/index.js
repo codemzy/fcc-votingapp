@@ -151,6 +151,17 @@ module.exports = function (app, db, passport) {
 			    }
 			});
         });
+    app.route('/api/user/polls')
+        .get(isLoggedIn, function(req, res) {
+            db.collection('polls').find({"author": req.user._id}, {"_id": 0, "title": 1, "poll_id": 1}).toArray(function(err, docs) {
+                if (err) {
+                    res.json({ "error": "There were no polls found" });
+                } else {
+                    // repond with all poll titles and poll id's
+                    res.json(docs);
+                }
+            });
+        });
         // TO DO ROUTE FOR USER MY POLLS
         
     // authentication routes
