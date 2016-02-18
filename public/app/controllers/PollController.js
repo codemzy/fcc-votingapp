@@ -36,17 +36,20 @@ angular.module('VoteGoatApp')
     $scope.message = false;
     // ADD VOTE FUNCTION
     $scope.addVote = function() {
-      // UPDATE THE CHART CLIENT SIDE
-      for (var j = 0; j < chartData.length; j++) {
-        if (chartData[j].label == $scope.myVote.option) {
-          voteGoatChart.segments[j].value = chartData[j].value + 1;
-          voteGoatChart.update();
-          $scope.voted = true;
-          $scope.message = 'Your vote for "' + $scope.myVote.option + '" has been submitted';
+      // check if option has been selected
+      if ($scope.myVote.option) {
+        // update the chart client side
+        for (var j = 0; j < chartData.length; j++) {
+          if (chartData[j].label == $scope.myVote.option) {
+            voteGoatChart.segments[j].value = chartData[j].value + 1;
+            voteGoatChart.update();
+            $scope.voted = true;
+            $scope.message = 'Your vote for "' + $scope.myVote.option + '" has been submitted';
+          }
         }
+        // update the DB
+        poll.addPollVote($routeParams.num, $scope.myVote.option);
       }
-      // UPDATE THE DB
-      poll.addPollVote($routeParams.num, $scope.myVote.option);
     };
     // CHECK IF VOTED BEFORE FUNCTION
     $scope.checkVote = function() {
