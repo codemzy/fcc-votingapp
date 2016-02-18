@@ -74,6 +74,8 @@ angular.module('VoteGoatApp')
         var position = voteGoatChart.segments.length;
         voteGoatChart.addData({ "value": 1, "label": $scope.newOption, "color": chartColors[position][0], "highlight": chartColors[position][1] });
         document.getElementById('voteChart-legend').innerHTML = voteGoatChart.generateLegend();
+        // update the DB
+        // TO DO
       }
     };
     // CHECK IF VOTED BEFORE FUNCTION

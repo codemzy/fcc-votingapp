@@ -105,11 +105,30 @@ module.exports = function (app, db, passport) {
                     var today = new Date;
                     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                     var month = months[today.getMonth()];
-                    db.collection('users').update({"_id": req.user._id}, { $push: { "poll_votes": pollID, "activity": { $each: [{ "poll": pollID, "option": optionVote, "date": month + " " + today.getDate() + ", " + today.getFullYear() }], $position: 0, $slice: 50 } } });
+                    db.collection('users').update({"_id": req.user._id}, { $push: { "poll_votes": pollID, "activity": { $each: [{ "poll": pollID, "option": optionVote, "type": "voted", "date": month + " " + today.getDate() + ", " + today.getFullYear() }], $position: 0, $slice: 50 } } });
                 }
             });
             // and add the vote to the poll
             db.collection('polls').update(query, { $inc: { "options.$.votes" : 1 } }, { upsert: false, multi: false });
+        });
+    app.route('/api/user/option/:pollid/:option(*)')
+        .get(isLoggedIn, function(req, res) {
+            var pollID = parseInt(req.params.pollid);
+            var optionNew = req.params.option;
+            var query = { poll_id: pollID };
+            db.collection('users').findOne({"_id": req.user._id }, {"_id": 1}, function(err, user) {
+                if (err) {
+                    // no user found so maybe do a redirect here?
+                } else {
+                    // user found add the poll_id to the voted array and activity message
+                    var today = new Date;
+                    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    var month = months[today.getMonth()];
+                    db.collection('users').update({"_id": req.user._id}, { $push: { "poll_votes": pollID, "activity": { $each: [{ "poll": pollID, "option": optionNew, "type": "voted", "date": month + " " + today.getDate() + ", " + today.getFullYear() }], $position: 0, $slice: 50 } } });
+                }
+            });
+            // and add the vote to the poll
+            db.collection('polls').update(query, { $push: { "options" : { option: optionNew, votes: 1 } } }, { upsert: false, multi: false });
         });
         // TO DO ROUTE FOR USER ADD POLL OPTION
         // TO DO ROUTE FOR USER ADD NEW POLL
