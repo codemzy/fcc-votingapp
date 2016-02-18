@@ -102,7 +102,8 @@ module.exports = function (app, db, passport) {
             var query = { poll_id: pollID, "options.option": optionVote };
             db.collection('users').findOne({"_id": req.user._id }, {"_id": 1}, function(err, user) {
                 if (err) {
-                    // no user found so maybe do a redirect here?
+                    // no user found so log the error
+                    console.log("Error: " + err);
                 } else {
                     // user found add the poll_id to the voted array and activity message
                     var today = new Date;
@@ -121,7 +122,8 @@ module.exports = function (app, db, passport) {
             var query = { poll_id: pollID };
             db.collection('users').findOne({"_id": req.user._id }, {"_id": 1}, function(err, user) {
                 if (err) {
-                    // no user found so maybe do a redirect here?
+                    // no user found so log the error
+                    console.log("Error: " + err);
                 } else {
                     // user found add the poll_id to the voted array and activity message
                     var today = new Date;
@@ -138,7 +140,8 @@ module.exports = function (app, db, passport) {
 			// get the poll number
 			db.collection('polls').find().count(function(err, count) {
 			    if (err) {
-			        // what to do in an error?
+                    // no poll found so log the error
+                    console.log("Error: " + err);
 			    } else {
 			        // add the poll
 			        var pollNum = count+1;
@@ -162,7 +165,6 @@ module.exports = function (app, db, passport) {
                 }
             });
         });
-        // TO DO ROUTE FOR USER MY POLLS
         
     // authentication routes
         
@@ -171,6 +173,15 @@ module.exports = function (app, db, passport) {
 
 	app.route('/auth/twitter/callback')
 		.get(passport.authenticate('twitter', {
+			successRedirect: '/',
+			failureRedirect: '/'
+		}));
+		
+	app.route('/auth/facebook')
+	    .get(passport.authenticate('facebook'));
+	    
+	app.route('/auth/facebook/callback')
+		.get(passport.authenticate('facebook', {
 			successRedirect: '/',
 			failureRedirect: '/'
 		}));
