@@ -40,17 +40,20 @@ angular.module('VoteGoatApp')
     $scope.help = false;
     // ADD VOTE FUNCTION
     $scope.addVote = function() {
-      // update the chart client side
-      for (var j = 0; j < chartData.length; j++) {
-        if (chartData[j].label == $scope.myVote.option) {
-          voteGoatChart.segments[j].value = chartData[j].value + 1;
-          voteGoatChart.update();
-          $scope.voted = true;
-          $scope.message = 'Your vote for "' + $scope.myVote.option + '" has been submitted';
+      // check if option has been selected
+      if ($scope.myVote.option) {
+        // update the chart client side
+        for (var j = 0; j < chartData.length; j++) {
+          if (chartData[j].label == $scope.myVote.option) {
+            voteGoatChart.segments[j].value = chartData[j].value + 1;
+            voteGoatChart.update();
+            $scope.voted = true;
+            $scope.message = 'Your vote for "' + $scope.myVote.option + '" has been submitted';
+          }
         }
+        // update the DB
+        poll.addPollVote($routeParams.num, $scope.myVote.option);
       }
-      // update the DB
-      poll.addPollVote($routeParams.num, $scope.myVote.option);
     };
     // ADD OPTION FUNCTION
     $scope.addOption = function() {
@@ -60,7 +63,11 @@ angular.module('VoteGoatApp')
         // invalid option so display message
         $scope.message = 'Your answer option is invalid - please only include letters, numbers and spaces (no punctuation).';
         $scope.help = 'Invalid Option. Please remove punctuation (valid characters are letters, numbers and spaces).';
-      } else {
+      } 
+      else if (!option) {
+        $scope.help = 'No answer given (you cannot submit a blank option).';
+      }
+      else {
         // update the chart client side
         $scope.message = false;
         $scope.help = false;
