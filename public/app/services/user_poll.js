@@ -20,5 +20,15 @@ angular.module('VoteGoatApp')
                 return err;
               });
   };
+  // add poll option for registered user
+  this.addPollOption = function(pollNum, option) {
+    return $http.get('/api/user/option/' + pollNum + "/" + option)
+              .success(function(data) {
+                return "Your vote for " + option + " has been submitted.";
+              })
+              .error(function(err) {
+                return err;
+              });
+  };
   return this;
 }]);

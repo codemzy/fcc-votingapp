@@ -130,7 +130,6 @@ module.exports = function (app, db, passport) {
             // and add the vote to the poll
             db.collection('polls').update(query, { $push: { "options" : { option: optionNew, votes: 1 } } }, { upsert: false, multi: false });
         });
-        // TO DO ROUTE FOR USER ADD POLL OPTION
         // TO DO ROUTE FOR USER ADD NEW POLL
         // TO DO ROUTE FOR USER MY POLLS
         
