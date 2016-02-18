@@ -12,11 +12,11 @@ angular.module('VoteGoatApp', ['ngRoute'])
     .when('/', {
     templateUrl: '/public/app/views/home.html'
     })
+    // logged in routes
     .when('/polls', {
-    templateUrl: '/public/app/views/polls.html',
+    templateUrl: '/public/app/views/user_polls.html',
     controller: 'PollsController'
     })
-    // logged in routes
     .when('/profile', {
     templateUrl: '/public/app/views/user_profile.html',
     controller: 'ProfileController'
@@ -28,6 +28,10 @@ angular.module('VoteGoatApp', ['ngRoute'])
     .when('/add/poll', {
     templateUrl: '/public/app/views/user_addpoll.html',
     controller: 'User_AddPollController'
+    })
+    .when('/polls/my', {
+    templateUrl: '/public/app/views/user_mypolls.html',
+    controller: 'User_MyPollsController'
     })
     // default
     .otherwise({ 

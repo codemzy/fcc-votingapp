@@ -9,5 +9,14 @@ angular.module('VoteGoatApp')
                 return err;
               });
   };
+  this.getMyPolls = function() {
+    return $http.get('/api/user/polls')
+              .success(function(data) {
+                return data;
+              })
+              .error(function(err) {
+                return err;
+              });
+  };
   return this;
 }]);

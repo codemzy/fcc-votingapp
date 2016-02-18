@@ -11,5 +11,8 @@ angular.module('VoteGoatApp')
         username = data.facebook.displayName;
     }
     $scope.user.username = username;
+    $scope.userLogout = function() {
+      user.logoutUser();
+    };
   });  
 }]);
