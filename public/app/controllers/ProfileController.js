@@ -1,6 +1,6 @@
 angular.module('VoteGoatApp')
 .controller('ProfileController', ['$scope', 'user', function($scope, user) {
-  user.success(function(data) {
+  user.getUser().success(function(data) {
     $scope.user = data;
     // set the username
     var username = "You";

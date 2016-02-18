@@ -81,7 +81,6 @@ module.exports = function (app, db, passport) {
         });
     app.route('/api/user/poll/:pollid')
         .get(isLoggedIn, function(req, res) {
-            console.log(req.user);
 			var user = req.user;
             var pollID = parseInt(req.params.pollid);
             db.collection('polls').findOne({"poll_id": pollID}, {"_id": 0, "title": 1, "poll_id": 1, "options": 1}, function(err, doc) {
@@ -106,13 +105,12 @@ module.exports = function (app, db, passport) {
                     var today = new Date;
                     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                     var month = months[today.getMonth()];
-                    db.collection('users').update({"_id": req.user._id}, { $push: { "poll_votes": pollID, "activity": pollID + ": You voted for " + optionVote + " on " + today.getDate() + " " + month + ", " + today.getFullYear() } });
+                    db.collection('users').update({"_id": req.user._id}, { $push: { "poll_votes": pollID, "activity": { $each: [{ "poll": pollID, "option": optionVote, "date": month + " " + today.getDate() + ", " + today.getFullYear() }], $position: 0, $slice: 50 } } });
                 }
             });
             // and add the vote to the poll
             db.collection('polls').update(query, { $inc: { "options.$.votes" : 1 } }, { upsert: false, multi: false });
         });
-        // TO DO ROUTE FOR USER NEW POLL VOTE
         // TO DO ROUTE FOR USER ADD POLL OPTION
         // TO DO ROUTE FOR USER ADD NEW POLL
         // TO DO ROUTE FOR USER MY POLLS
