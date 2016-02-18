@@ -1,5 +1,8 @@
 // var ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server.js');
 
+var bodyParser = require('body-parser');
+var parseUrlencoded = bodyParser.urlencoded({ extended: true });
+
 module.exports = function (app, db, passport) {
     
 	function isLoggedIn (req, res, next) {
@@ -129,6 +132,22 @@ module.exports = function (app, db, passport) {
             });
             // and add the vote to the poll
             db.collection('polls').update(query, { $push: { "options" : { option: optionNew, votes: 1 } } }, { upsert: false, multi: false });
+        });
+    app.route('/api/user/add/poll')
+        .post(isLoggedIn, parseUrlencoded, function(req, res) {
+			var user = req.user;
+			console.log(user);
+			console.log(req.body);
+			console.log(req.body.pollName);
+			console.log(req.body.pollOptions);
+			db.collection('polls').find().count(function(err, count) {
+			    if (err) {
+			        // what to do in an error?
+			    } else {
+			        var pollNum = count+1;
+			        console.log(pollNum);
+			    }
+			});
         });
         // TO DO ROUTE FOR USER ADD NEW POLL
         // TO DO ROUTE FOR USER MY POLLS

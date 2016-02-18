@@ -1,0 +1,40 @@
+<div class="container">
+    
+  <div class="col-md-12">
+    <h1>Add Poll.</h1>
+    <p class="lead">Wahoo! Let's add a new poll and get some votes!</p>
+    
+    <div class="jumbotron">
+      <h3><i class="fa fa-info-circle"></i> Poll Details</h3>
+        <form ng-submit="sendData()">
+            <div class="form-group">
+                <br>
+                <label for="pollTitle">Poll Name:</label>
+                <input ng-model="formData.pollName" name="pollName" id="pollTitle" type="text" class="form-control" placeholder="The title of your poll" required> 
+                <br>
+                <label for="pollOptions">Answer Options:</label>
+                <div class="input-group">
+                    <input ng-model="newOption" name="pollOptions" id="pollOptions" type="text" class="form-control" placeholder="Add an option">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="button" ng-click="optionsSubmit()">Add Option</button>
+                    </span>
+                </div>
+                <div ng-if="help" class="text-center">
+                    <span class="help-block text-danger"><small>{{ help }}</small></span>
+                </div>
+                <br>
+                <label for="pollVote">Place Your Vote:</label>
+                <select ng-model="formData.myVote" name="my-vote" id="pollVote" class="form-control" ng-options="option for option in formData.pollOptions" required>
+                  <option value="">-- select or add other --</option>
+                </select>
+            </div>
+            <input type="submit" id="addPoll" class="btn btn-block btn-danger" value="ADD POLL" />
+        </form>
+
+    {{ formData }}
+    
+  </div>
+  
+  
+  
+</div>

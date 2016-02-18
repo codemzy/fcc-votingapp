@@ -6,7 +6,7 @@
     "name": "codemzy"
   },
   "dependencies": {
-    "body-parser": "~1.14.x",
+    "body-parser": "^1.14.2",
     "dotenv": "^2.0.0",
     "express": "~4.13.x",
     "express-session": "^1.13.0",
