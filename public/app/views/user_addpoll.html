@@ -12,7 +12,7 @@
                 <label for="pollTitle">Poll Name:</label>
                 <input ng-model="formData.pollName" name="pollName" id="pollTitle" type="text" class="form-control" placeholder="The title of your poll" required> 
                 <br>
-                <label for="pollOptions">Answer Options:</label>
+                <label for="pollOptions">Add Answer Options:</label>
                 <div class="input-group">
                     <input ng-model="newOption" name="pollOptions" id="pollOptions" type="text" class="form-control" placeholder="Add an option">
                     <span class="input-group-btn">
@@ -22,16 +22,41 @@
                 <div ng-if="help" class="text-center">
                     <span class="help-block text-danger"><small>{{ help }}</small></span>
                 </div>
+                
+                <br>              
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Options added</th>
+                        </tr>
+                      </thead>
+                        <tr ng-if="!formData.pollOptions[0]">
+                          <td>You have not yet added any answer options.</td>
+                        </tr>
+                        <tr ng-repeat="option in formData.pollOptions">
+                          <td>{{ option.option }}</td>
+                        </tr>
+                    </table>
+                    <div ng-if="formData.pollOptions[0]" class="text-center"><small>Not happy with your options? <a href="" ng-click="requestClear()">Click here to clear</a>.</small></div>
+                    <div ng-if="clearRequest" class="alert alert-danger text-center">
+                      <button type="button" class="close" ng-click="cancelClear()" data-dismiss="alert"><i class="fa fa-times"></i></button>
+                      <strong>Are you sure?</strong> <br>If you want to clear all your vote options and start again, just click the button.<br>
+                      <a href="" ng-click="optionsClear()" class="btn btn-danger">Clear Options</a>
+                      <a href="" ng-click="cancelClear()" class="btn btn-default">Cancel</a>
+                    </div>
+                  </div>
+                </div>
+                
                 <br>
                 <label for="pollVote">Place Your Vote:</label>
-                <select ng-model="formData.myVote" name="my-vote" id="pollVote" class="form-control" ng-options="option for option in formData.pollOptions" required>
+                <select ng-model="formData.myVote" name="my-vote" id="pollVote" class="form-control" ng-options="option.option for option in formData.pollOptions" required>
                   <option value="">-- select or add other --</option>
                 </select>
             </div>
             <input type="submit" id="addPoll" class="btn btn-block btn-danger" value="ADD POLL" />
         </form>
-
-    {{ formData }}
     
   </div>
   

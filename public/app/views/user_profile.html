@@ -50,7 +50,7 @@
         <div ng-if="user.activity[0]">
             <div class="list-group">
               <a href="#/poll/{{ activity.poll }}" class="list-group-item list-group-item-danger" ng-repeat="activity in user.activity">
-                  You voted for <b>{{ activity.option }}</b> on {{ activity.date }}.
+                  You {{activity.type}} <b>{{ activity.option }}</b> on {{ activity.date }}.
               </a>
             </div>
         </div>

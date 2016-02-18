@@ -135,21 +135,22 @@ module.exports = function (app, db, passport) {
         });
     app.route('/api/user/add/poll')
         .post(isLoggedIn, parseUrlencoded, function(req, res) {
-			var user = req.user;
-			console.log(user);
-			console.log(req.body);
-			console.log(req.body.pollName);
-			console.log(req.body.pollOptions);
+			// get the poll number
 			db.collection('polls').find().count(function(err, count) {
 			    if (err) {
 			        // what to do in an error?
 			    } else {
+			        // add the poll
 			        var pollNum = count+1;
-			        console.log(pollNum);
+			        db.collection('polls').insert({"author": req.user._id, "title": req.body.pollName, "options": req.body.pollOptions, "poll_id": pollNum});
+			        // add the poll_id to the voted array and activity message 
+                    var today = new Date;
+                    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    var month = months[today.getMonth()];
+			        db.collection('users').update({"_id": req.user._id}, { $push: { "poll_votes": pollNum, "activity": { $each: [{ "poll": pollNum, "option": req.body.pollName, "type": "added poll", "date": month + " " + today.getDate() + ", " + today.getFullYear() }], $position: 0, $slice: 50 } } });
 			    }
 			});
         });
-        // TO DO ROUTE FOR USER ADD NEW POLL
         // TO DO ROUTE FOR USER MY POLLS
         
     // authentication routes
