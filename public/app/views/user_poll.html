@@ -26,8 +26,8 @@
         
         <div class="jumbotron">
           <h3><i class="fa fa-unlock-alt"></i> Log in</h3>
-          <p>If you log in, you can add your own vote options to this poll, create your own polls and view your activity. It's totally free.</p>
-          <a href="#/login" class="btn btn-block btn-primary">Log In</a>
+          <p>Sorry, you already voted on this poll so you can't add a new answer.</p>
+          <a href="#/polls" class="btn btn-block btn-primary">All Polls</a>
         </div>
     </div>
   </div>
@@ -48,9 +48,16 @@
         </div>
         
         <div class="jumbotron">
-          <h3><i class="fa fa-unlock-alt"></i> Log in</h3>
-          <p>If you log in, you can add your own vote options to this poll, create your own polls and view your activity. It's totally free.</p>
-          <a href="#/login" class="btn btn-block btn-primary">Log In</a>
+          <h3><i class="fa fa-list-ol"></i> Add new option</h3>
+            <form ng-submit="$parent.addOption()">
+                <div class="form-group">
+                  <input ng-model="$parent.newOption" name="my-option" type="text" class="form-control" placeholder="Add a new answer option...">
+                  <div ng-if="help">
+                    <span class="help-block text-danger"><small>{{ help }}</small></span>
+                  </div>
+                </div>
+                <input type="submit" id="submit" class="btn btn-block btn-danger" value="SUBMIT NEW ANSWER" />
+            </form>
         </div>
     </div>
   </div>
