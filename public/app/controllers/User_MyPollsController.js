@@ -3,7 +3,7 @@ angular.module('VoteGoatApp')
 .controller('User_MyPollsController', ['$scope', 'polls', function($scope, polls) {
   polls.getMyPolls().success(function(data) {
     $scope.polls = data;
-    if (!$scope.polls) {
+    if (!$scope.polls[0]) {
         $scope.nopolls = true;
     }
     $scope.titleLength = function(title) {

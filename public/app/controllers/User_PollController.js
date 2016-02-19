@@ -78,6 +78,24 @@ angular.module('VoteGoatApp')
         poll.addPollOption($routeParams.num, option);
       }
     };
+    // DELETE POLL FUNCTIONS
+    $scope.requestDelete = function() {
+        $scope.deleteRequest = true;
+    };
+    $scope.cancelDelete = function() {
+        $scope.deleteRequest = false;
+    };
+    $scope.pollDelete= function() {
+        poll.deletePoll($routeParams.num);
+    };
+    // check if the user is the poll author
+    $scope.checkAuthor = function() {
+      if (data.poll.author == data.user._id) {
+        return true;
+      } else {
+        return false;
+      }
+    };
     // CHECK IF VOTED BEFORE FUNCTION
     $scope.checkVote = function() {
       if ($scope.voted) {

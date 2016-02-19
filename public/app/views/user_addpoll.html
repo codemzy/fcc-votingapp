@@ -52,7 +52,7 @@
                 <br>
                 <label for="pollVote">Place Your Vote:</label>
                 <select ng-model="formData.myVote" name="my-vote" id="pollVote" class="form-control" ng-options="option.option for option in formData.pollOptions" required>
-                  <option value="">-- select or add other --</option>
+                  <option value="">-- select from your options to vote --</option>
                 </select>
             </div>
             <input type="submit" id="addPoll" class="btn btn-block btn-danger" value="ADD POLL" />

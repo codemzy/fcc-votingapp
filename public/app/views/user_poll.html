@@ -85,6 +85,14 @@
         </tr>
     </table>
   </div>
+  
+  <div ng-if="checkAuthor()" id="delete-message" class="text-center"><small>Lost your love for this poll? <a href="" ng-click="requestDelete()">Click here to delete</a>.</small></div>
+  <div ng-if="deleteRequest" class="alert alert-danger text-center">
+    <button type="button" class="close" ng-click="cancelDelete()" data-dismiss="alert"><i class="fa fa-times"></i></button>
+    <strong>Are you sure?</strong> <br>Once you delete this poll, the VoteGoat will eat it, and we can't get it back.<br>
+    <a href="" ng-click="pollDelete()" class="btn btn-danger">Delete Poll</a>
+    <a href="" ng-click="cancelDelete()" class="btn btn-default">Cancel</a>
+  </div>
 
 
 </div>

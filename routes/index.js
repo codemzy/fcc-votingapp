@@ -86,7 +86,7 @@ module.exports = function (app, db, passport) {
         .get(isLoggedIn, function(req, res) {
 			var user = req.user;
             var pollID = parseInt(req.params.pollid);
-            db.collection('polls').findOne({"poll_id": pollID}, {"_id": 0, "title": 1, "poll_id": 1, "options": 1}, function(err, doc) {
+            db.collection('polls').findOne({"poll_id": pollID}, {"_id": 0, "title": 1, "poll_id": 1, "options": 1, "author": 1}, function(err, doc) {
                 if (err) {
                     res.json({ "error": "No poll found" });
                 } else {
@@ -153,6 +153,18 @@ module.exports = function (app, db, passport) {
 			        db.collection('users').update({"_id": req.user._id}, { $push: { "poll_votes": pollNum, "activity": { $each: [{ "poll": pollNum, "option": req.body.pollName, "type": "added poll", "date": month + " " + today.getDate() + ", " + today.getFullYear() }], $position: 0, $slice: 50 } } });
 			    }
 			});
+        });
+    app.route('/api/user/delete/poll/:pollid')
+        .get(isLoggedIn, function(req, res) {
+            var pollID = parseInt(req.params.pollid);
+            db.collection('polls').remove({"poll_id": pollID, "author": req.user._id}, 1, function(err, doc) {
+                if (err) {
+                    res.json({ "error": "No poll deleted" });
+                } else {
+                    // return poll info and user info to check if user has already voted
+                    res.json({ poll: doc });
+                }
+            });
         });
     app.route('/api/user/polls')
         .get(isLoggedIn, function(req, res) {
