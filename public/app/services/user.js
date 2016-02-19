@@ -15,6 +15,7 @@ angular.module('VoteGoatApp')
                 $window.location.href = '/';
               })
               .error(function(err) {
+                console.log(err);
                 return err;
               });
   };

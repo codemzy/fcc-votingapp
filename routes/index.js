@@ -5,6 +5,7 @@ var parseUrlencoded = bodyParser.urlencoded({ extended: true });
 
 module.exports = function (app, db, passport) {
     
+    // function to check if user is logged in
 	function isLoggedIn (req, res, next) {
 		if (req.isAuthenticated()) {
 			return next();
@@ -13,6 +14,7 @@ module.exports = function (app, db, passport) {
 		}
 	}
     
+    // direct user to correct app if logged in or anon
     app.route('/')
         .get(function (request, response) {
     		if (request.isAuthenticated()) {
@@ -178,7 +180,7 @@ module.exports = function (app, db, passport) {
             });
         });
         
-    // authentication routes
+    // authentication routes (FIRST LOG IN)
         
 	app.route('/auth/twitter')
 		.get(passport.authenticate('twitter'));
@@ -197,6 +199,13 @@ module.exports = function (app, db, passport) {
 			successRedirect: '/',
 			failureRedirect: '/'
 		}));
+		
+	
+	// authorize routes (CONNECT ADDITIONAL ACCOUNT)
+	// put the logic in the above routes, in future could have seperate strategy as per passport docs
+
+	
+	// LOG OUT
 		
 	app.route('/logout')
 		.get(function (req, res) {

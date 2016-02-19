@@ -4,10 +4,10 @@ angular.module('VoteGoatApp')
     $scope.user = data;
     // set the username
     var username = "You";
-    if (data.twitter.displayName != undefined) {
+    if (data.twitter) {
         username = data.twitter.displayName;
     }
-    else if (data.facebook.displayName != undefined) {
+    else if (data.facebook) {
         username = data.facebook.displayName;
     }
     $scope.user.username = username;
