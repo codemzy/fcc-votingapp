@@ -202,7 +202,7 @@ module.exports = function (app, db, passport) {
 		
 	
 	// authorize routes (CONNECT ADDITIONAL ACCOUNT)
-	// put the logic in the above routes, in future could have seperate strategy as per passport docs
+	// put the logic in the above authentication routes, in future could have seperate strategy as per passport docs
 
 	
 	// LOG OUT
