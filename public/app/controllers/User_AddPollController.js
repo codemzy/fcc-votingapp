@@ -9,18 +9,21 @@ angular.module('VoteGoatApp')
     // VALIDATE NEW OPTION AND ADD
     $scope.optionsSubmit = function() {
         var length = $scope.formData.pollOptions.length;
-        if (!$scope.newOption) {
+        var option = $scope.newOption;
+        if (!option) {
             $scope.help = "Answer options cannot be blank";
+        } else if (option.match(/[^a-z\s0-9]/ig)) {
+            $scope.help = 'Invalid Answer Option. Please remove punctuation (valid characters are letters, numbers and spaces)';
         } else {
             for (var i = 0; i < length; i++) {
                 // check if option already exists
-                if ($scope.newOption == $scope.formData.pollOptions[i].option) {
+                if (option == $scope.formData.pollOptions[i].option) {
                     $scope.help = "This answer already exists";
                     return;
                 }
             }
             $scope.help = false;
-            $scope.formData.pollOptions.push({ "option": $scope.newOption, "votes": 0 });
+            $scope.formData.pollOptions.push({ "option": option, "votes": 0 });
         }
     };
     $scope.requestClear = function() {

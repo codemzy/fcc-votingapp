@@ -1,5 +1,3 @@
-// var ClickHandler = require(process.cwd() + '/app/controllers/clickHandler.server.js');
-
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({ extended: true });
 
