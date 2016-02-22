@@ -6,6 +6,7 @@ angular.module('VoteGoatApp')
     $scope.formData.pollOptions = [];
     $scope.formData.myVote = false;
     $scope.help = false;
+    $scope.helpTitle = false;
     // VALIDATE NEW OPTION AND ADD
     $scope.optionsSubmit = function() {
         var length = $scope.formData.pollOptions.length;
@@ -14,6 +15,8 @@ angular.module('VoteGoatApp')
             $scope.help = "Answer options cannot be blank";
         } else if (option.match(/[^a-z\s0-9]/ig)) {
             $scope.help = 'Invalid Answer Option. Please remove punctuation (valid characters are letters, numbers and spaces)';
+        } else if ($scope.formData.pollOptions[20]) {
+            $scope.help = 'You have already added the maximum number of answer options (20)';
         } else {
             for (var i = 0; i < length; i++) {
                 // check if option already exists
@@ -38,8 +41,11 @@ angular.module('VoteGoatApp')
     };
     $scope.sendData = function () {
         // check if poll name and options have been added and a vote cast
-        if (!$scope.formData.pollName) {
-            $scope.help = "You must add a poll name, usually a question";
+        if ($scope.formData.pollName.match(/[^a-z\s0-9?]/ig)) {
+            $scope.helpTitle = 'Invalid Title. Please remove punctuation (valid characters are letters, numbers, spaces and ?)';
+        }
+        else if (!$scope.formData.pollName) {
+            $scope.helpTitle = "You must add a poll name, usually a question";
         }
         else if (!$scope.formData.pollOptions || !$scope.formData.myVote) {
             $scope.help = "You must add some options and select your vote to add a poll";
@@ -51,9 +57,7 @@ angular.module('VoteGoatApp')
                 }
             }
             var pollData = $.param($scope.formData);
-            add.addPoll(pollData).success(function(data) {
-                $scope.user = data.user;
-            });  
+            add.addPoll(pollData);  
         }
     };
 }]);

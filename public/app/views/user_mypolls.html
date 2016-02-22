@@ -14,6 +14,14 @@
     </a>
   </div>
   
+  <div ng-if="loading">
+      <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <h3><i class="fa fa-refresh fa-5x fa-spin"></i><br>Loading Polls...</h3>
+            </div>
+      </div>
+  </div>
+  
   <div ng-if="nopolls">
       <div class="col-md-12">
             <div class="jumbotron text-center">

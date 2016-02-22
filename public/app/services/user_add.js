@@ -1,5 +1,5 @@
 angular.module('VoteGoatApp')
-.factory('add', ['$http', function($http) {
+.factory('add', ['$http', '$location', function($http, $location) {
   // add the poll data
   this.addPoll = function(data) {
     return $http({
@@ -9,7 +9,7 @@ angular.module('VoteGoatApp')
             headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
               .success(function(data) {
-                return data;
+                $location.path('/add/confirm');
               })
               .error(function(data) {
                 return data;

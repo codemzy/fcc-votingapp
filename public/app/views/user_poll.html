@@ -45,9 +45,10 @@
                 </div>
                 <input type="submit" id="submitVote" class="btn btn-block btn-danger" value="SUBMIT VOTE" />
             </form>
+            <div ng-if="!myVote && poll.options[20]"><small><br><br>This poll has reached the maximum (20) answer options. To vote please choose from the list above.</small></div>
         </div>
         
-        <div ng-if="!myVote">
+        <div ng-if="!myVote && !poll.options[20]">
         <div class="jumbotron">
           <h3><i class="fa fa-list-ol"></i> Add other</h3>
           <p>Don't like the options above? Submit your answer below and add a new option to this poll.</p>

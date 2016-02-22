@@ -61,19 +61,24 @@ module.exports = function (app, db, passport) {
             var pollID = parseInt(req.params.pollid);
             var optionVote = req.params.vote;
             var ip = req.headers["x-forwarded-for"];
-            var query = { poll_id: pollID, "options.option": optionVote };
-            console.log(query);
-            db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1}, function(err, user) {
+            var query = { "poll_id": pollID, "options.option": optionVote };
+            db.collection('anonip').findOne({"ip": ip }, {"_id": 0, "ip": 1, "poll_votes": 1}, function(err, user) {
                 if (err) {
-                    // no user found add the IP and the vote to the anonip collection
-                    db.collection('anonip').insert({"ip": ip, "poll_votes": [pollID]});
+                    console.log(err);
                 } else {
-                    // user ip found add the poll_id to the voted array for the IP 
-                    db.collection('anonip').update({"ip": ip}, { $push: { "poll_votes": pollID } });
+                    if (user) {
+                        // user ip found add the poll_id to the voted array for the IP 
+                        db.collection('anonip').update({"ip": ip}, { $push: { "poll_votes": pollID } });
+                    } else {
+                        // no user found add the IP and the vote to the anonip collection
+                        db.collection('anonip').insert({"ip": ip, "poll_votes": [pollID]});
+                    }
+                // and add the vote to the poll
+                console.log(query);
+                db.collection('polls').update(query, { $inc: { "options.$.votes" : 1 } }, { upsert: false, multi: false });
                 }
             });
-            // and add the vote to the poll
-            db.collection('polls').update(query, { $inc: { "options.$.votes" : 1 } }, { upsert: false, multi: false });
+
         });
 
         
@@ -145,12 +150,18 @@ module.exports = function (app, db, passport) {
 			    } else {
 			        // add the poll
 			        var pollNum = count+1;
-			        db.collection('polls').insert({"author": req.user._id, "title": req.body.pollName, "options": req.body.pollOptions, "poll_id": pollNum});
+			        var optionsArr = [];
+			        for (var i = 0; i < req.body.pollOptions.length; i++) {
+			            optionsArr.push({ "option": req.body.pollOptions[i].option, "votes": parseInt(req.body.pollOptions[i].votes, 10) });
+			        }
+			        db.collection('polls').insert({ "author": req.user._id, "title": req.body.pollName, "options": optionsArr, "poll_id": pollNum });
 			        // add the poll_id to the voted array and activity message 
                     var today = new Date;
                     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                     var month = months[today.getMonth()];
 			        db.collection('users').update({"_id": req.user._id}, { $push: { "poll_votes": pollNum, "activity": { $each: [{ "poll": pollNum, "option": req.body.pollName, "type": "added poll", "date": month + " " + today.getDate() + ", " + today.getFullYear() }], $position: 0, $slice: 50 } } });
+			        // respond to trigger the angular success redirect
+			        res.json({ "Poll": "The poll has been added" });
 			    }
 			});
         });
@@ -161,8 +172,8 @@ module.exports = function (app, db, passport) {
                 if (err) {
                     res.json({ "error": "No poll deleted" });
                 } else {
-                    // return poll info and user info to check if user has already voted
-                    res.json({ poll: doc });
+                    // respond to trigger the angular success redirect
+                    res.json({ "Poll": "The poll has been deleted" });
                 }
             });
         });

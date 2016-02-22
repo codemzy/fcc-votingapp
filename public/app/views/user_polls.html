@@ -5,6 +5,13 @@
     <h1>Polls.</h1>
   </div>
 
+  <div ng-if="loading">
+      <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <h3><i class="fa fa-refresh fa-5x fa-spin"></i><br>Loading Polls...</h3>
+            </div>
+      </div>
+  </div>
 
   <div class="col-md-4" ng-repeat="poll in polls">
     <a href="#/poll/{{ poll.poll_id }}">

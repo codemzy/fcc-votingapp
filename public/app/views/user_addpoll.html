@@ -11,6 +11,10 @@
                 <br>
                 <label for="pollTitle">Poll Name:</label>
                 <input ng-model="formData.pollName" name="pollName" id="pollTitle" type="text" class="form-control" placeholder="The title of your poll" required> 
+                <div ng-if="helpTitle" class="text-center">
+                    <span class="help-block"><small>{{ helpTitle }}</small></span>
+                </div>
+                
                 <br>
                 <label for="pollOptions">Add Answer Options:</label>
                 <div class="input-group">
@@ -20,7 +24,7 @@
                     </span>
                 </div>
                 <div ng-if="help" class="text-center">
-                    <span class="help-block text-danger"><small>{{ help }}</small></span>
+                    <span class="help-block"><small>{{ help }}</small></span>
                 </div>
                 
                 <br>              
