@@ -142,13 +142,13 @@ module.exports = function (app, db, passport) {
     app.route('/api/user/add/poll')
         .post(isLoggedIn, parseUrlencoded, function(req, res) {
 			// get the poll number
-			db.collection('polls').find().count(function(err, count) {
+			db.collection('polls').find({}, {"_id": 0, poll_id: 1}).sort({poll_id:-1}).limit(1).toArray(function(err, doc) {
 			    if (err) {
                     // no poll found so log the error
                     console.log("Error: " + err);
 			    } else {
 			        // add the poll
-			        var pollNum = count+1;
+			        var pollNum = doc[0].poll_id+1;
 			        var optionsArr = [];
 			        for (var i = 0; i < req.body.pollOptions.length; i++) {
 			            optionsArr.push({ "option": req.body.pollOptions[i].option, "votes": parseInt(req.body.pollOptions[i].votes, 10) });
@@ -160,7 +160,7 @@ module.exports = function (app, db, passport) {
                     var month = months[today.getMonth()];
 			        db.collection('users').update({"_id": req.user._id}, { $push: { "poll_votes": pollNum, "activity": { $each: [{ "poll": pollNum, "option": req.body.pollName, "type": "added poll", "date": month + " " + today.getDate() + ", " + today.getFullYear() }], $position: 0, $slice: 50 } } });
 			        // respond to trigger the angular success redirect
-			        res.json({ "Poll": "The poll has been added" });
+			        res.json({ "poll_id": pollNum });
 			    }
 			});
         });
