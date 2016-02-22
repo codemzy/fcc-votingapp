@@ -41,7 +41,7 @@ angular.module('VoteGoatApp')
     // ADD VOTE FUNCTION
     $scope.addVote = function() {
       // check if option has been selected
-      if ($scope.myVote.option) {
+      if ($scope.myVote.option && !$scope.voted) {
         // update the chart client side
         for (var j = 0; j < chartData.length; j++) {
           if (chartData[j].label == $scope.myVote.option) {
