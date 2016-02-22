@@ -74,7 +74,6 @@ module.exports = function (app, db, passport) {
                         db.collection('anonip').insert({"ip": ip, "poll_votes": [pollID]});
                     }
                 // and add the vote to the poll
-                console.log(query);
                 db.collection('polls').update(query, { $inc: { "options.$.votes" : 1 } }, { upsert: false, multi: false });
                 }
             });
