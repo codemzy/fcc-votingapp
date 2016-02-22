@@ -9,7 +9,7 @@ angular.module('VoteGoatApp')
             headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
               .success(function(data) {
-                $location.path('/add/confirm');
+                $location.path('/poll/' + data.poll_id);
               })
               .error(function(data) {
                 return data;

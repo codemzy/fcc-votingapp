@@ -36,9 +36,6 @@ angular.module('VoteGoatApp', ['ngRoute'])
     .when('/delete/confirm', {
     templateUrl: '/public/app/views/user_polldeleted.html'
     })
-    .when('/add/confirm', {
-    templateUrl: '/public/app/views/user_polladded.html'
-    })
     // default
     .otherwise({ 
       redirectTo: '/' 
