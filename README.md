@@ -14,3 +14,14 @@ User stories:
 7. As an unauthenticated or authenticated user, I can see the results of polls in chart form. 
 8. As an authenticated user, if I don't like the options on a poll, I can create a new option. 
  
+View at [https://votegoat.glitch.me](https://votegoat.glitch.me)
+
+Env variables needed:
+
+- TWITTER_KEY
+- TWITTER_SECRET
+- FACEBOOK_ID
+- FACEBOOK_SECRET
+- MONGO_URL
+- APP_URL
+
